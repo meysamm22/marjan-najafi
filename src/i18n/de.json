@@ -1,0 +1,629 @@
+{
+  "meta": {
+    "homeTitle": "Marjan Najafi — UI/UX Designerin in Frankfurt",
+    "homeDescription": "Portfolio und Lebenslauf von Marjan Najafi Dehkordi, UI/UX Designerin in Frankfurt am Main mit Masterabschluss in Informatik.",
+    "caseTitle": "Tebeto — App für Arzttermine · Case Study",
+    "caseDescription": "Eine End-to-End-UI/UX-Case-Study: Research, Personas, User Flows, Wireframes, High-Fidelity-Design und Design System für eine App zur Arztterminbuchung."
+  },
+  "nav": {
+    "about": "Über mich",
+    "work": "Case Study",
+    "experience": "Erfahrung",
+    "skills": "Skills",
+    "home": "Start",
+    "skip": "Zum Inhalt springen",
+    "menu": "Menü öffnen",
+    "close": "Menü schließen",
+    "language": "Sprache",
+    "primary": "Hauptnavigation"
+  },
+  "hero": {
+    "eyebrow": "UI/UX Designerin · Frankfurt am Main",
+    "title": [
+      "Hi, ich bin Marjan.",
+      "Aus komplexen Abläufen",
+      "werden *ruhige, klare*",
+      "Interfaces."
+    ],
+    "lead": "UI/UX Designerin mit Masterabschluss in Informatik. Ich verbinde User Research mit analytischem Denken und einem QA-geschulten Blick fürs Detail – für digitale Produkte, die man auf den ersten Blick versteht.",
+    "ctaPrimary": "Zur Case Study",
+    "scroll": "Scrollen",
+    "portraitAlt": "Porträt von Marjan Najafi Dehkordi",
+    "badge": "UI/UX Design · User Research · Prototyping · Design Systems · ",
+    "chips": [
+      "Figma",
+      "M.Sc. Informatik",
+      "Nutzerzentriert"
+    ],
+    "stats": [
+      {
+        "value": "M.Sc.",
+        "label": "Informatik"
+      },
+      {
+        "value": "5",
+        "label": "Research-basierte Features gestaltet"
+      },
+      {
+        "value": "13",
+        "label": "Features im Benchmark mit 3 Wettbewerbern"
+      },
+      {
+        "value": "2 Jahre",
+        "label": "Qualitätssicherung"
+      }
+    ]
+  },
+  "marquee": [
+    "Figma",
+    "User Research",
+    "Wireframing",
+    "Prototyping",
+    "User Flows",
+    "Usability Testing",
+    "Design Systems",
+    "Responsive Design"
+  ],
+  "about": {
+    "kicker": "Über mich",
+    "title": "Der Blick einer Designerin, der Kopf einer *Informatikerin.*",
+    "p1": "Ich bin eine motivierte Fachkraft mit Masterabschluss in Informatik und klarem Fokus auf UI/UX Design. Ich arbeite praxisnah in Figma, folge dem User-Centered-Design-Prozess vom Wireframe bis zum Prototyp und bringe erste Kenntnisse im Bereich Cloud Design mit.",
+    "p2": "Zwei Jahre im Quality Control haben mir beigebracht, das zu sehen, was Nutzerinnen und Nutzer sehen: den uneinheitlichen Abstand, den kaputten Breakpoint, den einen Schritt zu viel. Zusammen mit Grundkenntnissen in HTML und CSS macht mich das zu einer Designerin, die mitdenkt, wie etwas gebaut wird – analytisch, detailorientiert und motiviert, intuitive und nutzerfreundliche digitale Produkte zu gestalten.",
+    "languagesTitle": "Sprachen",
+    "languages": [
+      {
+        "name": "Persisch",
+        "level": "Muttersprache",
+        "value": 5
+      },
+      {
+        "name": "Deutsch",
+        "level": "Fließend",
+        "value": 4
+      },
+      {
+        "name": "Englisch",
+        "level": "B2",
+        "value": 3
+      }
+    ],
+    "factsTitle": "Auf einen Blick",
+    "facts": [
+      {
+        "label": "Standort",
+        "value": "Frankfurt am Main"
+      },
+      {
+        "label": "Fokus",
+        "value": "UI/UX & Produktdesign"
+      },
+      {
+        "label": "Haupttool",
+        "value": "Figma"
+      },
+      {
+        "label": "Hintergrund",
+        "value": "Informatik, QA"
+      }
+    ]
+  },
+  "work": {
+    "kicker": "Ausgewählte Arbeit",
+    "title": "Ein Projekt, *ganz erzählt.*",
+    "lead": "Keine Wand aus Vorschaubildern. Stattdessen ein einziges Produkt – vom ersten Nutzerinterview bis zum fertigen Prototyp.",
+    "name": "Tebeto",
+    "tagline": "App für Arzttermine",
+    "summary": "Eine Plattform zur medizinischen Terminbuchung, die die Termine der ganzen Familie an einem Ort bündelt – mit smarter Warteliste, einem Chatbot für die Wahl der richtigen Ärztin oder des richtigen Arztes, digitalem Dokumentenupload und spielerischen Erinnerungen.",
+    "tags": [
+      "UX Research",
+      "UI Design",
+      "Design System",
+      "Prototyping"
+    ],
+    "facts": [
+      {
+        "label": "Dauer",
+        "value": "7 Wochen"
+      },
+      {
+        "label": "Plattform",
+        "value": "Android"
+      },
+      {
+        "label": "Rahmen",
+        "value": "Teamprojekt"
+      }
+    ],
+    "cta": "Case Study öffnen",
+    "imageAlt": "Collage aus Tebeto-Screens: Startseite, Familienmitglieder, Buchungen und Arztprofil"
+  },
+  "experience": {
+    "kicker": "Erfahrung",
+    "title": "Wo ich *gearbeitet* und gelernt habe.",
+    "items": [
+      {
+        "role": "Product Design Bootcamp — Doctor Appointment App „Tebeto“",
+        "org": "Amanj Academy",
+        "place": "Online",
+        "period": "Sep. 2025 – Nov. 2025",
+        "points": [
+          "Durchführung eines End-to-End-UI/UX- und Product-Design-Projekts für eine digitale Plattform zur medizinischen Terminbuchung nach dem User-Centered-Design-Prozess.",
+          "Durchführung von UX Research, Competitive Analysis und Nutzerinterviews zur Identifikation von Nutzerbedürfnissen, Pain Points und Optimierungspotenzialen.",
+          "Entwicklung von Personas, User Journeys, User Flows und Informationsarchitektur (IA) zur Gestaltung einer intuitiven User Experience.",
+          "Erstellung von Low- und High-Fidelity-Wireframes, interaktiven Prototypen und High-Fidelity-UI-Designs in Figma.",
+          "Durchführung von Usability Tests, Analyse von Nutzerfeedback und iterative Optimierung der Designs.",
+          "Entwicklung eines konsistenten Design Systems mit wiederverwendbaren UI Components sowie Anwendung von Visual Hierarchy, Typography, Color Theory, Accessibility und Responsive Design.",
+          "Konzeption und Gestaltung nutzerzentrierter Features wie Warteliste, Familienprofile, Dokumentenupload, Chatbot-Unterstützung und Gamification."
+        ]
+      },
+      {
+        "role": "Quality Control — WordPress Templates",
+        "org": "RTL-Theme",
+        "place": "Teheran, Iran",
+        "period": "Jan. 2020 – Jan. 2022",
+        "points": [
+          "Quality Assurance für WordPress-Templates mit Fokus auf Usability, visuelle Konsistenz und Funktionalität.",
+          "Prüfung von Responsive Designs sowie Durchführung von Cross-Browser-Tests.",
+          "Enge Zusammenarbeit mit Entwicklern zur Behebung von Fehlern und Optimierung der User Experience."
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "kicker": "Skills",
+    "title": "Mein *Werkzeugkasten.*",
+    "groups": [
+      {
+        "name": "Design",
+        "items": [
+          "UI/UX Design",
+          "Wireframing",
+          "Prototyping",
+          "Design Systems",
+          "Responsive Design"
+        ]
+      },
+      {
+        "name": "Research",
+        "items": [
+          "User Research",
+          "User Flows",
+          "Usability Testing"
+        ]
+      },
+      {
+        "name": "Tools & Technik",
+        "items": [
+          "Figma",
+          "HTML & CSS (Grundkenntnisse)"
+        ]
+      },
+      {
+        "name": "Stärken",
+        "items": [
+          "Teamfähigkeit",
+          "Analytisches Denken"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "kicker": "Ausbildung & Weiterbildung",
+    "title": "Immer am *Lernen.*",
+    "degreeLabel": "Abschluss",
+    "courseLabel": "Kurs",
+    "items": [
+      {
+        "type": "degree",
+        "title": "M.Sc. Informatik",
+        "org": "Esfahan Azad University, Iran",
+        "period": "2016 – 2020",
+        "text": ""
+      },
+      {
+        "type": "course",
+        "title": "Figma UI/UX Design Advanced",
+        "org": "Udemy",
+        "period": "",
+        "text": "Design Systems, Responsive Design, Variables & Design Tokens, Components & Variants, Interactive Prototyping, Microinteractions und Accessibility."
+      },
+      {
+        "type": "course",
+        "title": "Figma UX/UI Design Essentials",
+        "org": "Udemy",
+        "period": "",
+        "text": "Wireframing, Prototyping, UI Components, Layout, Farbe & Typografie sowie Style Guides und grundlegende UI/UX-Workflows."
+      }
+    ]
+  },
+  "footer": {
+    "role": "UI/UX Designerin",
+    "location": "Frankfurt am Main, Deutschland",
+    "navLabel": "Footer",
+    "rights": "Mit Sorgfalt gestaltet in Frankfurt.",
+    "top": "Nach oben"
+  },
+  "case": {
+    "back": "Zurück zum Profil",
+    "eyebrow": "UI/UX Case Study · November 2025",
+    "logoAlt": "Tebeto",
+    "title": "Eine App für Arzttermine – für die *ganze Familie.*",
+    "lead": "Tebeto ist mehr als ein Buchungstool. Die App macht Gesundheitsversorgung einfacher: mit Familienverwaltung, smarten Wartelisten, einem hilfreichen Chatbot für die Arztwahl, Gamification-Belohnungen und digitalem Dokumentenupload – ein reibungsloseres Erlebnis für Patientinnen, Patienten und Praxen.",
+    "heroAlt": "Collage aus Tebeto-High-Fidelity-Screens: Startseite, Familienmitglieder, Buchungen, Arztprofil und Bezahlung",
+    "figmaCta": "Prototyp in Figma öffnen",
+    "meta": [
+      {
+        "label": "Rahmen",
+        "value": "Teamprojekt"
+      },
+      {
+        "label": "Dauer",
+        "value": "7 Wochen"
+      },
+      {
+        "label": "Plattform",
+        "value": "Android"
+      },
+      {
+        "label": "Tools",
+        "value": "Figma, Porsline, Google Meet"
+      }
+    ],
+    "chapters": [
+      "Überblick",
+      "Problem",
+      "Prozess",
+      "Discover",
+      "Design",
+      "Style Guide",
+      "Ergebnis"
+    ],
+    "chaptersLabel": "Kapitel",
+    "overview": {
+      "title": "Projekt*überblick*",
+      "audienceTitle": "Zielgruppen",
+      "audience": [
+        "Alter 30–55",
+        "Patientinnen und Patienten mit besonderen Bedürfnissen",
+        "Menschen, die mit Online-Plattformen vertraut sind",
+        "Familien, die mehrere Profile verwalten"
+      ],
+      "goalsTitle": "Geschäftsziele",
+      "goals": [
+        "Marktanteile bei Online-Arztterminbuchungen gewinnen",
+        "Umsatz durch Provisionen und Servicepartnerschaften"
+      ]
+    },
+    "problem": {
+      "title": "Problem & *Lösung*",
+      "lead": "Fünf Frustrationen tauchten im Research immer wieder auf. Aus jeder wurde ein Feature.",
+      "problemLabel": "Problem",
+      "solutionLabel": "Lösung",
+      "pairs": [
+        {
+          "problem": "**Termine** für die ganze Familie **zu verwalten** ist mühsam",
+          "solution": "Eine Plattform für **alle Familientermine**"
+        },
+        {
+          "problem": "**Lange Wartezeiten** und **begrenzte Verfügbarkeit** führen zu Verzögerungen",
+          "solution": "Echtzeit-Verfügbarkeit und ein **Wartelistensystem**"
+        },
+        {
+          "problem": "Es fällt schwer, **die richtige Ärztin oder den richtigen Arzt** sicher auszuwählen",
+          "solution": "**Chatbot-Unterstützung** bei der Arztwahl"
+        },
+        {
+          "problem": "**Papierunterlagen gehen verloren** oder werden beim Termin **vergessen**",
+          "solution": "**Medizinische Dokumente** digital **hochladen und speichern**"
+        },
+        {
+          "problem": "**Fehlende Bindung** führt zu ausbleibenden Bewertungen und verpassten Terminen",
+          "solution": "**Gamification** für mehr Engagement und wahrgenommene Termine"
+        }
+      ]
+    },
+    "process": {
+      "title": "Design*prozess*",
+      "lead": "Wir haben einen User-Centered-Design-Ansatz (UCD) verfolgt, um die Nutzerinnen und Nutzer in den Mittelpunkt zu stellen und ihre Bedürfnisse in jeder Phase des Designprozesses zu berücksichtigen.",
+      "phases": [
+        {
+          "name": "Discover",
+          "items": [
+            "Nutzerinterview",
+            "Umfrage",
+            "Wettbewerbsanalyse"
+          ]
+        },
+        {
+          "name": "Design",
+          "items": [
+            "Sitemap",
+            "Interaction Flow",
+            "Wireframes",
+            "UI Design",
+            "Prototyp"
+          ]
+        },
+        {
+          "name": "Test",
+          "items": [
+            "Usability Test"
+          ]
+        }
+      ],
+      "timelineTitle": "Zeitplan",
+      "weekShort": "W",
+      "tracks": [
+        {
+          "label": "Explore",
+          "name": "Product Discovery",
+          "from": 1,
+          "to": 2
+        },
+        {
+          "label": "Create",
+          "name": "Interaction Design",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "label": "Evaluate",
+          "name": "Test & Iteration",
+          "from": 6,
+          "to": 7
+        }
+      ]
+    },
+    "discover": {
+      "title": "*Discover*",
+      "lead": "Indem wir Verhalten und Frustrationen untersucht haben, konnten wir die zentralen Lücken im bestehenden Buchungsprozess identifizieren – sie gaben später die Richtung für die Features von Tebeto vor.",
+      "surveyTitle": "Umfrage",
+      "surveyLead": "Um das Verhalten von Patientinnen und Patienten und die Hürden bei der Terminbuchung besser zu verstehen, haben wir eine Online-Umfrage durchgeführt – mit **Porsline** als Tool für Verteilung und Datenerhebung. So konnten wir die wichtigsten Pain Points identifizieren.",
+      "shareLabel": "Anteil der Befragten",
+      "questions": [
+        {
+          "title": "Erfahrung beim letzten Praxisbesuch",
+          "options": [
+            "Einfach",
+            "Sehr einfach",
+            "Mittel",
+            "Schwierig",
+            "Sehr schwierig"
+          ]
+        },
+        {
+          "title": "Kriterien bei der Arztwahl",
+          "options": [
+            "Fachgebiet",
+            "Erfahrung",
+            "Bewertungen von Patienten",
+            "Behandlungskosten",
+            "Ausstattung der Praxis",
+            "Terminzeit",
+            "Empfehlungen aus der Familie"
+          ]
+        },
+        {
+          "title": "Hürden bei der Online-Buchung",
+          "options": [
+            "Die richtige Ärztin / den richtigen Arzt finden",
+            "Begrenzte Verfügbarkeit",
+            "Langwieriger Buchungsprozess",
+            "Komplexe Oberfläche",
+            "Hohe Kosten",
+            "Entfernung zur Praxis"
+          ]
+        },
+        {
+          "title": "Erinnerungen an Termine & Dokumente",
+          "options": [
+            "Termin vergessen",
+            "Dokumente vergessen",
+            "Beides vergessen",
+            "Eigene Erinnerungen",
+            "Bestätigung nötig"
+          ]
+        }
+      ],
+      "benchTitle": "Benchmark",
+      "benchSub": "Wettbewerbsanalyse",
+      "benchLead": "Wir haben führende Wettbewerber wie **Paziresh24**, **Doctoreto** und **DrDr** analysiert, um zentrale Features, Lücken und Chancen im Markt für Online-Arztterminbuchungen zu erkennen. Diese Erkenntnisse haben geholfen zu definieren, wie Tebeto ein nahtloseres und umfassenderes Terminerlebnis bieten kann.",
+      "benchFeature": "Feature",
+      "yes": "Ja",
+      "no": "Nein",
+      "features": [
+        "Online-Terminbuchung",
+        "Online-Sprechstunde (Audio/Video/Text)",
+        "Filter nach Fachgebiet",
+        "Arztprofil",
+        "Bewertungen & Ratings",
+        "Praxisadresse / Kartenansicht",
+        "Nächste freie Termine",
+        "Buchungsbestätigung",
+        "Terminerinnerungen",
+        "Termin verschieben / absagen",
+        "Buchung für Familienmitglieder",
+        "Geschätzte Wartezeit",
+        "Bot-Unterstützung"
+      ],
+      "personaTitle": "User *Persona*",
+      "personaLead": "Auf Basis unserer Research-Erkenntnisse haben wir eine Persona erstellt – mit ihrem Lebensstil und ihrer Persönlichkeit, ihren Zielen und Motivationen, Frustrationen und Bedürfnissen.",
+      "persona": {
+        "name": "Nadia Fard",
+        "photoAlt": "Persona-Porträt von Nadia Fard",
+        "facts": [
+          {
+            "label": "Alter",
+            "value": "34"
+          },
+          {
+            "label": "Geschlecht",
+            "value": "Weiblich"
+          },
+          {
+            "label": "Wohnort",
+            "value": "Teheran"
+          },
+          {
+            "label": "Familienstand",
+            "value": "Verheiratet"
+          },
+          {
+            "label": "Beruf",
+            "value": "Verwaltungsangestellte in Vollzeit"
+          },
+          {
+            "label": "Ausbildung",
+            "value": "Bachelor in Rechnungswesen"
+          }
+        ],
+        "blocks": [
+          {
+            "title": "Ziele & Motivationen",
+            "items": [
+              "Arzttermine für sich und ihre Familie schnell, einfach und zuverlässig buchen.",
+              "Keine Zeit in Warteschlangen der Praxis verlieren.",
+              "Verlässliche Erinnerungen erhalten, damit kein Termin vergessen wird.",
+              "Den Verlauf ihrer Besuche speichern und jederzeit abrufen."
+            ]
+          },
+          {
+            "title": "Bedürfnisse",
+            "items": [
+              "Zuverlässige, sofortige Bestätigungen.",
+              "Die ganze Familie über ein einziges Konto verwalten.",
+              "Einfacher Zugriff auf den Terminverlauf."
+            ]
+          },
+          {
+            "title": "Hintergrund & Lebensstil",
+            "items": [
+              "Hat wenig Zeit, weil sie Vollzeitjob und Familie unter einen Hut bringt.",
+              "Erledigt Wichtiges lieber online, um unnötige Wege und Wartezeiten zu vermeiden.",
+              "Die Gesundheit ihrer Familie ist ihr sehr wichtig; sie vereinbart häufig Termine für ihre Kinder und ihren Mann.",
+              "Hat schlechte Erfahrungen mit Online-Systemen gemacht (fehlgeschlagene Reservierungen, fehlende Bestätigungen) und vertraut digitalen Plattformen deshalb weniger."
+            ]
+          },
+          {
+            "title": "Pain Points & Herausforderungen",
+            "items": [
+              "Die Bestätigungs-SMS kommt manchmal nicht an – das sorgt für Stress und Unsicherheit.",
+              "Registrierung und Login sind in manchen Apps lang und verwirrend.",
+              "Für jedes Kind einen eigenen Termin zu buchen, kostet viel Zeit.",
+              "Oft ist unklar, ob eine Online-Reservierung wirklich abgeschlossen wurde – das führt zu unnötigen Wegen in die Praxis.",
+              "Vergisst häufig Termine, weil Erinnerungssysteme nicht funktionieren."
+            ]
+          }
+        ]
+      }
+    },
+    "design": {
+      "title": "*Design*",
+      "flowTitle": "User Flow",
+      "flow": {
+        "auth": "Login & Registrierung",
+        "login": "Login",
+        "signup": "Registrierung",
+        "home": "Startbildschirm",
+        "tabs": [
+          "Home",
+          "Buchen",
+          "Profil",
+          "Tebot"
+        ],
+        "booking": "Termin buchen",
+        "speciality": "Fachgebiet",
+        "doctors": "Ärzte",
+        "profile": "Arztprofil",
+        "overview": "Übersicht"
+      },
+      "wireTitle": "Low-Fi-*Wireframes*",
+      "wireLead": "Frühe konzeptionelle Skizzen, die Struktur, Layout und User Flow der App umreißen – um Ideen vor dem High-Fidelity-Design zu validieren.",
+      "wireAlt": "Sechs Low-Fidelity-Wireframes: Startseite, Terminbuchung, Arztprofil, Meine Buchungen, Login und Mein Profil",
+      "hifiTitle": "Hi-Fi-*Mockups*",
+      "hifiLead": "Das finale Interface: eine ruhige blaue Farbwelt, großzügige Touch-Flächen und eine einheitliche Komponentensprache in jedem Flow.",
+      "galleryLabel": "Hi-Fi-Screens — horizontal scrollen",
+      "screens": {
+        "home": "Startseite",
+        "schedule": "Terminwahl & Buchung",
+        "tebot-chat": "Tebot-Symptomcheck"
+      },
+      "featuresTitle": "Was Tebeto *anders* macht",
+      "features": [
+        {
+          "icon": "family",
+          "title": "Familienprofile",
+          "text": "Alle Familienmitglieder in einem Konto verwalten und für jede Person buchen, ohne von vorn zu beginnen."
+        },
+        {
+          "icon": "waitlist",
+          "title": "Smarte Warteliste",
+          "text": "Echtzeit-Verfügbarkeit plus Warteliste – damit knappe Termine nicht mehr lange Wartezeiten und Verzögerungen bedeuten."
+        },
+        {
+          "icon": "chatbot",
+          "title": "Tebot, der Chatbot",
+          "text": "Geführte Fragen zu Symptomen helfen, mit einem guten Gefühl die richtige Ärztin oder den richtigen Arzt zu wählen."
+        },
+        {
+          "icon": "documents",
+          "title": "Digitale Dokumente",
+          "text": "Medizinische Unterlagen in der App hochladen und speichern – so geht beim Termin nichts verloren oder vergessen."
+        },
+        {
+          "icon": "rewards",
+          "title": "Gamification",
+          "text": "Punkte und Belohnungen motivieren zu Bewertungen und dazu, Termine wahrzunehmen – für mehr Engagement."
+        }
+      ]
+    },
+    "style": {
+      "title": "Style *Guide*",
+      "lead": "Ein kompaktes System, das jeden Screen konsistent hält: vier Farben, eine Typoskala, ein fünfspaltiges Raster und ein kleines Set wiederverwendbarer Komponenten.",
+      "colorsTitle": "Farbpalette",
+      "colors": {
+        "primary": "Primär",
+        "secondary": "Sekundär",
+        "text": "Textfarbe",
+        "success": "Erfolg"
+      },
+      "typeTitle": "Typografie",
+      "gridTitle": "Layout-Raster",
+      "grid": [
+        "5 Spalten",
+        "Rand 16 px",
+        "Abstand 8 px"
+      ],
+      "specTitle": "Buttons & Eingabefelder",
+      "specs": [
+        {
+          "label": "Primärer CTA",
+          "value": "380 × 56 px · Radius 20 px · Text 16 px"
+        },
+        {
+          "label": "Sekundärer Button",
+          "value": "186 × 48–56 px · Radius 8–10 px"
+        },
+        {
+          "label": "Eingabefeld",
+          "value": "380 × 56 px · Radius 8 px"
+        },
+        {
+          "label": "Karte",
+          "value": "Radius 12–16 px"
+        }
+      ],
+      "componentsTitle": "Komponenten",
+      "componentsAlt": "Zustände der Tab-Leiste, Profil-Tabs, Segment-Schalter, Wartelisten-Buttons, Toggles, Favoriten und Bewertungssterne",
+      "iconsTitle": "Icons",
+      "iconsAlt": "Icon-Set mit Icons für medizinische Fachgebiete und Interface-Icons"
+    },
+    "outcome": {
+      "title": "Ergebnis",
+      "quote": "Indem die Bedürfnisse der Nutzerinnen und Nutzer im Mittelpunkt standen – Klarheit, Kontrolle und Verbindung –, entstand mit dem Tebeto-Design ein effizienterer und empathischerer Weg durch die Gesundheitsversorgung. Die Lösung zeigt, wie bewusstes Design Ängste von Patientinnen und Patienten lindern, Zeit sparen und Vertrauen schaffen kann – und so wichtige Versorgung für alle zugänglicher macht.",
+      "splashAlt": "Tebeto-Splash-Screen mit Logo auf blauem Verlauf",
+      "nextTitle": "Lust, es in Bewegung zu sehen?",
+      "nextLead": "Alle Screens und Interaktionen finden Sie in der Figma-Datei."
+    }
+  }
+}

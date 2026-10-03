@@ -1,0 +1,1098 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { type Lang, fmt, localePath, useT } from '../i18n';
+import portrait from '../assets/marjan.webp';
+import collage from '../assets/tebeto/collage-tall.png';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const caseUrl = localePath(lang, 'tebeto');
+---
+
+<Base lang={lang} route="" title={t.meta.homeTitle} description={t.meta.homeDescription}>
+  <!-- ───────────────────────────── Hero ───────────────────────────── -->
+  <section class="hero">
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="hero__eyebrow" data-reveal>
+          <span class="pulse" aria-hidden="true"></span>
+          {t.hero.eyebrow}
+        </p>
+        <h1 class="display display-xl lines">
+          {
+            t.hero.title.map((line, i) => (
+              <span class="line" style={`--i:${i}`}>
+                <span set:html={fmt(line)} />
+              </span>
+            ))
+          }
+        </h1>
+        <p class="lead" data-reveal style="--i:5">{t.hero.lead}</p>
+        <div class="hero__cta" data-reveal style="--i:6">
+          <a class="btn btn-primary" href={caseUrl}>
+            {t.hero.ctaPrimary}
+            <Icon name="arrow-right" />
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__visual" data-reveal="scale" style="--i:2">
+        <div class="portrait">
+          <Image
+            src={portrait}
+            alt={t.hero.portraitAlt}
+            widths={[420, 640, 900]}
+            sizes="(max-width: 900px) 70vw, 420px"
+            loading="eager"
+            fetchpriority="high"
+            data-parallax="22"
+          />
+        </div>
+
+        <svg class="badge" viewBox="0 0 160 160" aria-hidden="true">
+          <defs>
+            <path id="badge-circle" d="M80 80m-61 0a61 61 0 1 1 122 0a61 61 0 1 1-122 0" />
+          </defs>
+          <circle cx="80" cy="80" r="79" class="badge__disc" />
+          <g class="badge__ring">
+            <text textLength="376" lengthAdjust="spacing">
+              <textPath href="#badge-circle">{t.hero.badge}</textPath>
+            </text>
+          </g>
+          <circle cx="80" cy="80" r="30" class="badge__core" />
+          <path
+            class="badge__star"
+            transform="translate(64 64) scale(1.34)"
+            d="m12 3 1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z"
+          ></path>
+        </svg>
+
+        <ul class="floaters" aria-hidden="true">
+          {t.hero.chips.map((chip, i) => <li class="chip" style={`--n:${i}`}>{chip}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <dl class="stats">
+        {
+          t.hero.stats.map((s, i) => (
+            <div class="stat" data-reveal style={`--i:${i}`}>
+              <dt>{s.label}</dt>
+              <dd>{s.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── Marquee ──────────────────────────── -->
+  <div class="marquee on-dusk" aria-hidden="true">
+    <div class="marquee__track">
+      {
+        [0, 1].map(() => (
+          <ul>
+            {t.marquee.map((word) => (
+              <li>
+                {word}
+                <Icon name="sparkle" size={22} />
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ──────────────────────────── About ───────────────────────────── -->
+  <section class="section" id="about">
+    <div class="container about">
+      <div class="about__head">
+        <p class="kicker" data-reveal>{t.about.kicker}</p>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(t.about.title)} />
+      </div>
+      <div class="about__body">
+        <p class="about__p1" data-reveal>{t.about.p1}</p>
+        <p class="prose" data-reveal style="--i:1">{t.about.p2}</p>
+
+        <div class="about__cards">
+          <div class="card" data-reveal>
+            <h3 class="card__title">{t.about.factsTitle}</h3>
+            <dl class="facts">
+              {
+                t.about.facts.map((f) => (
+                  <div>
+                    <dt>{f.label}</dt>
+                    <dd>{f.value}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+          <div class="card" data-reveal style="--i:1">
+            <h3 class="card__title">{t.about.languagesTitle}</h3>
+            <ul class="langs">
+              {
+                t.about.languages.map((l) => (
+                  <li>
+                    <span class="langs__name">{l.name}</span>
+                    <span class="langs__level">{l.level}</span>
+                    <span class="langs__meter" aria-hidden="true">
+                      {[1, 2, 3, 4, 5].map((n) => <i class:list={{ on: n <= l.value }} style={`--n:${n}`} />)}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── Featured project ─────────────────────── -->
+  <section class="section work" id="work">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker" data-reveal>{t.work.kicker}</p>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(t.work.title)} />
+        <p class="lead" data-reveal style="--i:2">{t.work.lead}</p>
+      </div>
+
+      <article class="work-card on-dusk" data-reveal="scale" data-tilt="2.5">
+        <div class="work-card__copy">
+          <p class="work-card__tagline">{t.work.tagline}</p>
+          <h3 class="display work-card__name">
+            <a href={caseUrl}>{t.work.name}</a>
+          </h3>
+          <p class="work-card__summary">{t.work.summary}</p>
+          <ul class="chip-list">
+            {t.work.tags.map((tag) => <li class="chip">{tag}</li>)}
+          </ul>
+          <dl class="work-card__facts">
+            {
+              t.work.facts.map((f) => (
+                <div>
+                  <dt>{f.label}</dt>
+                  <dd>{f.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <span class="btn btn-primary work-card__cta" aria-hidden="true">
+            {t.work.cta}
+            <Icon name="arrow-right" />
+          </span>
+        </div>
+        <div class="work-card__stage">
+          <Image
+            src={collage}
+            alt={t.work.imageAlt}
+            widths={[520, 800, 1200]}
+            sizes="(max-width: 900px) 92vw, 560px"
+            loading="lazy"
+            transition:name="tebeto-collage"
+          />
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ────────────────────────── Experience ────────────────────────── -->
+  <section class="section" id="experience">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker" data-reveal>{t.experience.kicker}</p>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(t.experience.title)} />
+      </div>
+
+      <ol class="timeline" data-fill>
+        {
+          t.experience.items.map((item, i) => (
+            <li class="tl">
+              <div class="tl__when" data-reveal>
+                <p class="tl__period">{item.period}</p>
+                <p class="tl__org">{item.org}</p>
+                <p class="tl__place">
+                  <Icon name="pin" size={15} />
+                  {item.place}
+                </p>
+              </div>
+              <div class="tl__body card" data-reveal style="--i:1">
+                <h3 class="display display-m">{item.role}</h3>
+                <ul class="tl__points">
+                  {item.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+                {i === 0 && (
+                  <a class="text-link tl__link" href={caseUrl}>
+                    {t.work.cta} →
+                  </a>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────── Skills ──────────────────────────── -->
+  <section class="section skills" id="skills">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker" data-reveal>{t.skills.kicker}</p>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(t.skills.title)} />
+      </div>
+
+      <div class="skills__grid">
+        {
+          t.skills.groups.map((group, i) => (
+            <section class="skill-card" data-reveal style={`--i:${i}`}>
+              <p class="skill-card__no" aria-hidden="true">
+                0{i + 1}
+              </p>
+              <h3 class="display display-m">{group.name}</h3>
+              <ul class="chip-list">
+                {group.items.map((item) => (
+                  <li class="chip">{item}</li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────── Education ───────────────────────────── -->
+  <section class="section" id="education">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker" data-reveal>{t.education.kicker}</p>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(t.education.title)} />
+      </div>
+
+      <ul class="edu">
+        {
+          t.education.items.map((item, i) => (
+            <li class:list={['edu__item', { 'edu__item--degree': item.type === 'degree' }]} data-reveal style={`--i:${i}`}>
+              <span class="edu__icon">
+                <Icon name={item.type === 'degree' ? 'degree' : 'course'} size={22} />
+              </span>
+              <p class="edu__type">{item.type === 'degree' ? t.education.degreeLabel : t.education.courseLabel}</p>
+              <h3 class="display display-m">{item.title}</h3>
+              <p class="edu__org">
+                {item.org}
+                {item.period && <span> · {item.period}</span>}
+              </p>
+              {item.text && <p class="edu__text">{item.text}</p>}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Hero ───────────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    padding-top: clamp(118px, 15vh, 168px);
+    isolation: isolate;
+  }
+  .aurora {
+    position: absolute;
+    inset: 0 0 12% 0;
+    z-index: -1;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(#000 62%, transparent);
+    mask-image: linear-gradient(#000 62%, transparent);
+  }
+  .aurora i {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(72px);
+    opacity: 0.62;
+    will-change: transform;
+    animation: drift 16s var(--ease-in-out) infinite alternate;
+  }
+  .aurora i:nth-child(1) {
+    width: 44vw;
+    height: 44vw;
+    right: -6vw;
+    top: -12vw;
+    background: var(--apricot);
+  }
+  .aurora i:nth-child(2) {
+    width: 36vw;
+    height: 36vw;
+    right: 20vw;
+    top: 12vw;
+    background: var(--rose);
+    opacity: 0.4;
+    animation-duration: 20s;
+    animation-delay: -6s;
+  }
+  .aurora i:nth-child(3) {
+    width: 40vw;
+    height: 40vw;
+    right: -12vw;
+    top: 22vw;
+    background: var(--blue);
+    opacity: 0.42;
+    animation-duration: 22s;
+    animation-delay: -11s;
+  }
+  .aurora i:nth-child(4) {
+    width: 30vw;
+    height: 30vw;
+    left: -12vw;
+    top: 30vw;
+    background: var(--sage);
+    opacity: 0.4;
+    animation-duration: 26s;
+  }
+  @keyframes drift {
+    to {
+      transform: translate3d(-7vw, 5vw, 0) scale(1.14);
+    }
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+  }
+  .hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 12px;
+    margin-bottom: clamp(20px, 3vw, 32px);
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .pulse {
+    position: relative;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--terracotta);
+  }
+  .pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: inherit;
+    animation: ping 2.4s var(--ease-out) infinite;
+  }
+  @keyframes ping {
+    to {
+      transform: scale(3.2);
+      opacity: 0;
+    }
+  }
+  .hero .lead {
+    margin-top: clamp(20px, 2.6vw, 30px);
+    max-width: 54ch;
+  }
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: clamp(26px, 3.4vw, 40px);
+  }
+
+  .hero__visual {
+    position: relative;
+    justify-self: end;
+    width: min(100%, 400px);
+  }
+  .portrait {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 999px 999px var(--r-l) var(--r-l);
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    background: var(--surface);
+  }
+  .portrait :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 18%;
+    transform: translateY(var(--py, 0px)) scale(1.1);
+  }
+  /* offset gradient outline that echoes the arch */
+  .hero__visual::before {
+    content: '';
+    position: absolute;
+    inset: -14px 14px 14px -14px;
+    border-radius: 999px 999px calc(var(--r-l) + 8px) calc(var(--r-l) + 8px);
+    padding: 2px;
+    background: var(--grad);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    pointer-events: none;
+  }
+
+  .badge {
+    position: absolute;
+    left: -58px;
+    bottom: 36px;
+    width: 136px;
+    height: 136px;
+    filter: drop-shadow(0 12px 22px rgb(42 37 48 / 0.22));
+  }
+  .badge__disc {
+    fill: var(--surface-2);
+  }
+  .badge__ring {
+    transform-origin: 80px 80px;
+    animation: spin 26s linear infinite;
+  }
+  .badge text {
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    fill: var(--ink);
+  }
+  .badge__core {
+    fill: var(--dusk);
+  }
+  .badge__star {
+    fill: none;
+    stroke: var(--apricot);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .floaters .chip {
+    position: absolute;
+    box-shadow: var(--shadow-1);
+    white-space: nowrap;
+    animation: float 7s var(--ease-in-out) infinite alternate;
+    animation-delay: calc(var(--n) * -2.3s);
+  }
+  .floaters .chip::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--grad);
+  }
+  .floaters .chip:nth-child(1) {
+    top: 17%;
+    left: -44px;
+  }
+  .floaters .chip:nth-child(2) {
+    top: 63%;
+    right: -30px;
+  }
+  .floaters .chip:nth-child(3) {
+    bottom: -14px;
+    right: 26px;
+  }
+  @keyframes float {
+    to {
+      transform: translateY(-10px);
+    }
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: clamp(36px, 5vw, 64px);
+    border-top: 1px solid var(--line);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 6px;
+    padding: clamp(18px, 2.4vw, 30px) clamp(12px, 2vw, 28px) clamp(26px, 3vw, 40px);
+    border-left: 1px solid var(--line);
+  }
+  .stat:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .stat dd {
+    font-family: var(--font-display);
+    font-stretch: 92%;
+    font-weight: 620;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .stat dt {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    line-height: 1.35;
+  }
+
+  /* ── Marquee ────────────────────────────────────────────────────── */
+  .marquee {
+    overflow: hidden;
+    padding-block: 18px;
+    margin-top: clamp(12px, 3vw, 36px);
+    transform: rotate(-1.4deg) scale(1.03);
+  }
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 38s linear infinite;
+  }
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+  .marquee ul {
+    display: flex;
+    flex: none;
+  }
+  .marquee li {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(18px, 2.4vw, 34px);
+    padding-right: clamp(18px, 2.4vw, 34px);
+    font-family: var(--font-display);
+    font-stretch: 92%;
+    font-weight: 560;
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .marquee li:nth-child(even) {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.4rem, 2.8vw, 2.25rem);
+    letter-spacing: 0;
+  }
+  .marquee li :global(svg) {
+    color: var(--apricot);
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ── About ──────────────────────────────────────────────────────── */
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .about__head {
+    position: sticky;
+    top: calc(var(--header-h) + 48px);
+    display: grid;
+    gap: 18px;
+  }
+  .about__body {
+    display: grid;
+    gap: 22px;
+  }
+  .about__p1 {
+    font-size: clamp(1.2rem, 1.9vw, 1.5rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  .about__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .card__title {
+    margin-bottom: 18px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .facts {
+    display: grid;
+    gap: 14px;
+  }
+  .facts dt {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+  .facts dd {
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .langs {
+    display: grid;
+    gap: 16px;
+  }
+  .langs li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    align-items: baseline;
+  }
+  .langs__name {
+    font-weight: 600;
+  }
+  .langs__level {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+  }
+  .langs__meter {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .langs__meter i {
+    height: 6px;
+    border-radius: 6px;
+    background: rgb(42 37 48 / 0.12);
+  }
+  .langs__meter i.on {
+    background: var(--grad-ink);
+    background-size: 500% 100%;
+    background-position: calc((var(--n) - 1) * 25%) 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) [data-reveal] .langs__meter i.on {
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.7s var(--ease-out);
+      transition-delay: calc(300ms + var(--n) * 90ms);
+    }
+    :global(html.js) [data-reveal].is-in .langs__meter i.on {
+      transform: none;
+    }
+  }
+
+  /* ── Featured project ───────────────────────────────────────────── */
+  .work-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    min-height: 600px;
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    isolation: isolate;
+    transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.5s var(--ease-out);
+  }
+  /* soft light that follows the pointer */
+  .work-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(520px circle at var(--mx, 20%) var(--my, 10%), rgb(201 120 138 / 0.34), transparent 65%),
+      radial-gradient(60% 80% at 0% 100%, rgb(100 120 196 / 0.3), transparent 70%);
+  }
+  .work-card__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: clamp(28px, 4.6vw, 64px);
+  }
+  .work-card__tagline {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-dusk-muted);
+  }
+  .work-card__name {
+    font-size: clamp(3rem, 7vw, 5.6rem);
+    margin-top: -6px;
+  }
+  /* stretched link: the whole card is one target */
+  .work-card__name a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: var(--r-xl);
+  }
+  .work-card__name a:focus-visible {
+    outline: none;
+  }
+  .work-card__name a:focus-visible::after {
+    outline: 2.5px solid var(--on-dusk);
+    outline-offset: -8px;
+  }
+  .work-card__summary {
+    max-width: 46ch;
+    color: var(--on-dusk-muted);
+  }
+  .work-card__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--on-dusk-line);
+    width: 100%;
+  }
+  .work-card__facts dt {
+    font-size: 0.82rem;
+    color: var(--on-dusk-muted);
+  }
+  .work-card__facts dd {
+    font-weight: 600;
+  }
+  .work-card__cta {
+    margin-top: auto;
+  }
+  .work-card:hover .work-card__cta :global(svg) {
+    transform: translateX(4px);
+  }
+  .work-card__stage {
+    position: relative;
+    margin: 14px;
+    border-radius: calc(var(--r-xl) - 14px);
+    overflow: hidden;
+    background: linear-gradient(160deg, #f6f8fc, #d3e2f6);
+  }
+  .work-card__stage :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+    transform: scale(1.03);
+    transition: transform 1.2s var(--ease-out);
+  }
+  .work-card:hover .work-card__stage :global(img) {
+    transform: scale(1.09) translateY(-2%);
+  }
+
+  /* ── Experience timeline ────────────────────────────────────────── */
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: clamp(28px, 4vw, 52px);
+    --rail: 250px;
+  }
+  .timeline::before,
+  .timeline::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: calc(var(--rail) + 20px);
+    width: 2px;
+    border-radius: 2px;
+    background: var(--line);
+  }
+  .timeline::after {
+    background: var(--grad-ink);
+    transform: scaleY(var(--fill, 0));
+    transform-origin: top;
+  }
+  .tl {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+  .tl::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: calc(var(--rail) + 13px);
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 3px solid var(--accent);
+  }
+  .tl__when {
+    position: sticky;
+    top: calc(var(--header-h) + 48px);
+    display: grid;
+    gap: 4px;
+  }
+  .tl__period {
+    font-family: var(--font-display);
+    font-stretch: 92%;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+  .tl__org {
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .tl__place {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+  .tl__points {
+    display: grid;
+    gap: 12px;
+    margin-top: 22px;
+    color: var(--ink-muted);
+  }
+  .tl__points li {
+    position: relative;
+    padding-left: 26px;
+    text-wrap: pretty;
+  }
+  .tl__points li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.72em;
+    width: 12px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--grad-ink);
+  }
+  .tl__link {
+    display: inline-block;
+    margin-top: 24px;
+  }
+
+  /* ── Skills ─────────────────────────────────────────────────────── */
+  .skills__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .skill-card {
+    position: relative;
+    grid-column: span 5;
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: clamp(24px, 3vw, 38px);
+    border-radius: var(--r-l);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out),
+      border-color var(--dur) var(--ease-out);
+  }
+  .skill-card:nth-child(4n + 1),
+  .skill-card:nth-child(4n) {
+    grid-column: span 7;
+  }
+  .skill-card::after {
+    content: '';
+    position: absolute;
+    right: -70px;
+    top: -70px;
+    z-index: -1;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: var(--grad);
+    filter: blur(46px);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out);
+  }
+  .skill-card:hover {
+    border-color: var(--line-strong);
+  }
+  .skill-card:hover::after {
+    opacity: 0.55;
+  }
+  .skill-card__no {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .skill-card .chip {
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .skill-card .chip:hover {
+    transform: translateY(-3px);
+  }
+
+  /* ── Education ──────────────────────────────────────────────────── */
+  .edu {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .edu__item {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--r-l);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .edu__item--degree {
+    background: var(--dusk);
+    color: var(--on-dusk);
+    border-color: transparent;
+    background-image: radial-gradient(80% 90% at 100% 0%, rgb(142 114 176 / 0.55), transparent 70%);
+  }
+  .edu__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .edu__item--degree .edu__icon {
+    background: rgb(244 239 232 / 0.12);
+    color: var(--on-dusk);
+  }
+  .edu__type {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .edu__org {
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .edu__text {
+    color: var(--ink-muted);
+    font-size: 0.98rem;
+  }
+  .edu__item--degree .edu__type,
+  .edu__item--degree .edu__org {
+    color: var(--on-dusk-muted);
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 1100px) {
+    .floaters .chip:nth-child(1) {
+      left: -18px;
+    }
+    .floaters .chip:nth-child(2) {
+      right: -10px;
+    }
+    .badge {
+      left: -30px;
+    }
+  }
+  @media (max-width: 900px) {
+    .hero__grid,
+    .about,
+    .work-card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hero__visual {
+      justify-self: center;
+      width: min(78%, 340px);
+      margin-top: 22px;
+    }
+    .about__head,
+    .tl__when {
+      position: static;
+    }
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .stat:nth-child(odd) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .stat:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+    .work-card {
+      min-height: 0;
+    }
+    .work-card__stage {
+      aspect-ratio: 4 / 3.4;
+      margin-top: 0;
+    }
+    .timeline {
+      --rail: 0px;
+    }
+    .timeline::before,
+    .timeline::after {
+      left: 7px;
+    }
+    .tl {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      padding-left: 38px;
+    }
+    .tl::before {
+      left: 0;
+    }
+    .skill-card,
+    .skill-card:nth-child(4n + 1),
+    .skill-card:nth-child(4n) {
+      grid-column: span 12;
+    }
+    .edu {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .about__cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .floaters .chip:nth-child(1) {
+      left: -26px;
+    }
+    .floaters .chip:nth-child(2) {
+      right: -26px;
+    }
+    .badge {
+      left: -34px;
+      width: 112px;
+      height: 112px;
+    }
+  }
+</style>

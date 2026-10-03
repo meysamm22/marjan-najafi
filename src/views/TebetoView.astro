@@ -1,0 +1,1632 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { type Lang, fmt, localePath, useT } from '../i18n';
+import { benchmark, profile, screenOrder, styleGuide, survey } from '../data/profile';
+import logo from '../assets/tebeto/logo.png';
+import collage from '../assets/tebeto/collage-wide.png';
+import wireframes from '../assets/tebeto/wireframes.png';
+import components from '../assets/tebeto/components.png';
+import icons from '../assets/tebeto/icons.png';
+import personaPhoto from '../assets/tebeto/persona.png';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const c = t.case;
+const home = localePath(lang);
+
+const chapterIds = ['overview', 'problem', 'process', 'discover', 'design', 'style', 'outcome'];
+const no = (i: number) => String(i + 1).padStart(2, '0');
+
+// Hi-fi screens: whatever exists in the folder, in the configured order.
+const screenFiles = import.meta.glob<{ default: ImageMetadata }>('../assets/tebeto/screens/*.{png,jpg,jpeg,webp}', {
+  eager: true,
+});
+const screenLabels: Record<string, string> = c.design.screens;
+const screens = Object.entries(screenFiles)
+  .map(([path, mod]) => {
+    const key = path.split('/').pop()!.replace(/\.\w+$/, '');
+    return { key, image: mod.default, label: screenLabels[key] ?? key };
+  })
+  .sort((a, b) => {
+    const rank = (k: string) => (screenOrder.includes(k) ? screenOrder.indexOf(k) : screenOrder.length);
+    return rank(a.key) - rank(b.key) || a.key.localeCompare(b.key);
+  });
+
+const competitors = benchmark.filter((b) => b.values);
+const phaseIcons = ['discover', 'design', 'test'] as const;
+const weeks = [1, 2, 3, 4, 5, 6, 7];
+type FeatureIcon = 'family' | 'waitlist' | 'chatbot' | 'documents' | 'rewards';
+---
+
+<Base lang={lang} route="tebeto" title={t.meta.caseTitle} description={t.meta.caseDescription}>
+  <div class="progress" data-progress aria-hidden="true"></div>
+
+  <nav class="rail" aria-label={c.chaptersLabel}>
+    <ol>
+      {
+        c.chapters.map((name, i) => (
+          <li>
+            <a href={`#${chapterIds[i]}`} data-spy={chapterIds[i]}>
+              <span class="rail__no">{no(i)}</span>
+              <span class="rail__name">{name}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <!-- ───────────────────────────── Hero ───────────────────────────── -->
+  <section class="c-hero">
+    <div class="c-hero__wash" aria-hidden="true"></div>
+    <div class="container">
+      <a class="back" href={home} data-reveal>
+        <Icon name="arrow-left" size={18} />
+        {c.back}
+      </a>
+
+      <div class="c-hero__grid">
+        <div class="c-hero__copy">
+          <p class="kicker" data-reveal>{c.eyebrow}</p>
+          <div class="c-logo" data-reveal style="--i:1">
+            <Image src={logo} alt={c.logoAlt} width={236} densities={[1, 2, 3]} loading="eager" />
+          </div>
+          <h1 class="display display-l" data-reveal style="--i:2" set:html={fmt(c.title)} />
+          <div class="c-hero__cta" data-reveal style="--i:3">
+            <a class="btn btn-primary" href={profile.figmaUrl} target="_blank" rel="noopener noreferrer">
+              {c.figmaCta}
+              <Icon name="arrow-up-right" />
+            </a>
+          </div>
+        </div>
+
+        <div class="c-stage" data-reveal="scale" style="--i:1">
+          <Image
+            src={collage}
+            alt={c.heroAlt}
+            widths={[640, 1000, 1500]}
+            sizes="(max-width: 900px) 92vw, 620px"
+            loading="eager"
+            fetchpriority="high"
+            transition:name="tebeto-collage"
+          />
+        </div>
+      </div>
+
+      <dl class="c-meta">
+        {
+          c.meta.map((m, i) => (
+            <div data-reveal style={`--i:${i}`}>
+              <dt>{m.label}</dt>
+              <dd>{m.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 01 Overview ──────────────────────── -->
+  <section class="section chapter" id="overview">
+    <div class="container">
+      <header class="chapter__head">
+        <span class="chapter__no" data-reveal>{no(0)}</span>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(c.overview.title)} />
+      </header>
+      <div class="overview">
+        <p class="overview__lead" data-reveal>{c.lead}</p>
+        <div class="overview__cards">
+          <div class="card" data-reveal>
+            <h3 class="label">{c.overview.audienceTitle}</h3>
+            <ul class="ticks">
+              {c.overview.audience.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="card" data-reveal style="--i:1">
+            <h3 class="label">{c.overview.goalsTitle}</h3>
+            <ul class="ticks">
+              {c.overview.goals.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 02 Problem ───────────────────────── -->
+  <section class="section chapter" id="problem">
+    <div class="container">
+      <header class="chapter__head">
+        <span class="chapter__no" data-reveal>{no(1)}</span>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(c.problem.title)} />
+        <p class="lead" data-reveal style="--i:2">{c.problem.lead}</p>
+      </header>
+
+      <ol class="pairs">
+        {
+          c.problem.pairs.map((pair) => (
+            <li class="pair">
+              <div class="pair__side pair__side--problem" data-reveal="left">
+                <span class="pair__tag">
+                  <Icon name="x" size={14} />
+                  {c.problem.problemLabel}
+                </span>
+                <p set:html={fmt(pair.problem)} />
+              </div>
+              <span class="pair__arrow" data-reveal style="--i:2" aria-hidden="true">
+                <Icon name="arrow-right" size={22} />
+              </span>
+              <div class="pair__side pair__side--solution" data-reveal="right" style="--i:3">
+                <span class="pair__tag">
+                  <Icon name="check" size={14} />
+                  {c.problem.solutionLabel}
+                </span>
+                <p set:html={fmt(pair.solution)} />
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 03 Process ───────────────────────── -->
+  <section class="section chapter" id="process">
+    <div class="container">
+      <header class="chapter__head">
+        <span class="chapter__no" data-reveal>{no(2)}</span>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(c.process.title)} />
+        <p class="lead" data-reveal style="--i:2">{c.process.lead}</p>
+      </header>
+
+      <ol class="phases">
+        {
+          c.process.phases.map((phase, i) => (
+            <li class="phase card" data-reveal style={`--i:${i}`}>
+              <span class="phase__icon">
+                <Icon name={phaseIcons[i]} size={24} />
+              </span>
+              <h3 class="display display-m">{phase.name}</h3>
+              <ul class="ticks">
+                {phase.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="gantt card" data-reveal>
+        <h3 class="label">{c.process.timelineTitle}</h3>
+        <div class="gantt__grid">
+          {
+            weeks.map((w) => (
+              <span class="gantt__week" style={`grid-column:${w}`}>
+                {c.process.weekShort}
+                {w}
+              </span>
+            ))
+          }
+          {
+            c.process.tracks.map((track, i) => (
+              <div class="gantt__bar" style={`grid-column:${track.from} / ${track.to + 1}; grid-row:${i + 2}; --n:${i}`}>
+                <span>{track.label}</span>
+                <strong>{track.name}</strong>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 04 Discover ──────────────────────── -->
+  <section class="section chapter" id="discover">
+    <div class="container">
+      <header class="chapter__head">
+        <span class="chapter__no" data-reveal>{no(3)}</span>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(c.discover.title)} />
+        <p class="lead" data-reveal style="--i:2">{c.discover.lead}</p>
+      </header>
+
+      <div class="sub">
+        <h3 class="display display-m" data-reveal>{c.discover.surveyTitle}</h3>
+        <p class="prose" data-reveal style="--i:1" set:html={fmt(c.discover.surveyLead)} />
+      </div>
+      <div class="survey">
+        {
+          c.discover.questions.map((q, qi) => {
+            const max = Math.max(...survey[qi]);
+            return (
+              <section class="survey__q card" data-reveal style={`--i:${qi % 2}`}>
+                <h4>
+                  <span class="survey__no">{qi + 1}</span>
+                  {q.title}
+                </h4>
+                <ul class="bars" style={`--max:${max}`}>
+                  {q.options.map((option, oi) => (
+                    <li>
+                      <span class="bars__label">{option}</span>
+                      <span class="bars__val">
+                        {survey[qi][oi]}%<span class="sr-only"> {c.discover.shareLabel}</span>
+                      </span>
+                      <span class="bars__track" aria-hidden="true">
+                        <i style={`--v:${survey[qi][oi]}; --n:${oi}`} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })
+        }
+      </div>
+
+      <div class="sub">
+        <p class="kicker" data-reveal>{c.discover.benchSub}</p>
+        <h3 class="display display-m" data-reveal style="--i:1">{c.discover.benchTitle}</h3>
+        <p class="prose" data-reveal style="--i:2" set:html={fmt(c.discover.benchLead)} />
+      </div>
+      <div class="bench card" data-reveal>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">{c.discover.benchFeature}</th>
+              {competitors.map((comp) => <th scope="col">{comp.name}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              c.discover.features.map((feature, fi) => (
+                <tr>
+                  <th scope="row">{feature}</th>
+                  {competitors.map((comp) => {
+                    const yes = comp.values![fi];
+                    return (
+                      <td>
+                        <span class:list={['mark', yes ? 'mark--yes' : 'mark--no']}>
+                          <Icon name={yes ? 'check' : 'x'} size={15} />
+                          <span class="sr-only">{yes ? c.discover.yes : c.discover.no}</span>
+                        </span>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub">
+        <h3 class="display display-m" data-reveal set:html={fmt(c.discover.personaTitle)} />
+        <p class="prose" data-reveal style="--i:1">{c.discover.personaLead}</p>
+      </div>
+      <div class="persona">
+        <aside class="persona__id card" data-reveal>
+          <div class="persona__photo">
+            <Image src={personaPhoto} alt={c.discover.persona.photoAlt} width={176} height={176} loading="lazy" />
+          </div>
+          <p class="display display-m">{c.discover.persona.name}</p>
+          <dl class="persona__facts">
+            {
+              c.discover.persona.facts.map((f) => (
+                <div>
+                  <dt>{f.label}</dt>
+                  <dd>{f.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </aside>
+        <div class="persona__blocks">
+          {
+            c.discover.persona.blocks.map((block, i) => (
+              <section class:list={['card', { 'persona__pain': i === 3 }]} data-reveal style={`--i:${i % 2}`}>
+                <h4 class="label">{block.title}</h4>
+                <ul class="ticks">
+                  {block.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 05 Design ────────────────────────── -->
+  <section class="section chapter" id="design">
+    <div class="container">
+      <header class="chapter__head">
+        <span class="chapter__no" data-reveal>{no(4)}</span>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(c.design.title)} />
+      </header>
+
+      <div class="split">
+        <div class="split__text">
+          <h3 class="display display-m" data-reveal>{c.design.flowTitle}</h3>
+        </div>
+        <div class="flow card" data-reveal>
+          <div class="flow__row"><span class="node">{c.design.flow.auth}</span></div>
+          <div class="flow__row flow__row--split">
+            <span class="node">{c.design.flow.login}</span>
+            <span class="node">{c.design.flow.signup}</span>
+          </div>
+          <div class="flow__row"><span class="node">{c.design.flow.home}</span></div>
+          <div class="flow__row flow__row--tabs">
+            {
+              c.design.flow.tabs.map((tab, i) => (
+                <span class:list={['node', 'node--tab', { 'is-path': i === 1 }]}>{tab}</span>
+              ))
+            }
+          </div>
+          <div class="flow__row flow__row--from-book"><span class="node">{c.design.flow.booking}</span></div>
+          <div class="flow__row flow__row--split">
+            <span class="node">{c.design.flow.speciality}</span>
+            <span class="node">{c.design.flow.doctors}</span>
+          </div>
+          <div class="flow__row"><span class="node">{c.design.flow.profile}</span></div>
+          <div class="flow__row"><span class="node node--end">{c.design.flow.overview}</span></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="split__text">
+          <h3 class="display display-m" data-reveal set:html={fmt(c.design.wireTitle)} />
+          <p class="prose" data-reveal style="--i:1">{c.design.wireLead}</p>
+        </div>
+        <figure class="paper wire" data-reveal="scale">
+          <Image
+            src={wireframes}
+            alt={c.design.wireAlt}
+            widths={[640, 1000, 1400]}
+            sizes="(max-width: 900px) 92vw, 640px"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+
+      <div class="sub">
+        <h3 class="display display-m" data-reveal set:html={fmt(c.design.hifiTitle)} />
+        <p class="prose" data-reveal style="--i:1">{c.design.hifiLead}</p>
+      </div>
+    </div>
+
+    <div class="gallery" role="region" aria-label={c.design.galleryLabel} tabindex="0" data-drag-scroll>
+      <ul>
+        {
+          screens.map((screen, i) => (
+            <li class="shot" data-reveal style={`--i:${Math.min(i, 5)}`}>
+              <figure>
+                <div class="shot__frame">
+                  <Image
+                    src={screen.image}
+                    alt={screen.label}
+                    widths={[300, 412, 600, 824]}
+                    sizes="(max-width: 620px) 220px, 264px"
+                    loading="lazy"
+                    draggable="false"
+                  />
+                </div>
+                <figcaption>
+                  <span>{no(i)}</span>
+                  {screen.label}
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="container">
+      <div class="sub">
+        <h3 class="display display-m" data-reveal set:html={fmt(c.design.featuresTitle)} />
+      </div>
+      <ul class="features">
+        {
+          c.design.features.map((feature, i) => (
+            <li class="feature" data-reveal style={`--i:${i % 3}`}>
+              <span class="feature__icon">
+                <Icon name={feature.icon as FeatureIcon} size={24} />
+              </span>
+              <h4 class="display display-m">{feature.title}</h4>
+              <p>{feature.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 06 Style guide ───────────────────── -->
+  <section class="section chapter" id="style">
+    <div class="container">
+      <header class="chapter__head">
+        <span class="chapter__no" data-reveal>{no(5)}</span>
+        <h2 class="display display-l" data-reveal style="--i:1" set:html={fmt(c.style.title)} />
+        <p class="lead" data-reveal style="--i:2">{c.style.lead}</p>
+      </header>
+
+      <div class="sg">
+        <section class="card sg__colors" data-reveal>
+          <h3 class="label">{c.style.colorsTitle}</h3>
+          <ul class="swatches">
+            {
+              styleGuide.colors.map((color, i) => (
+                <li style={`--c:${color.hex}; --n:${i}`}>
+                  <span class="swatches__chip" />
+                  <span class="swatches__name">{c.style.colors[color.key as keyof typeof c.style.colors]}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section class="card sg__type" data-reveal style="--i:1">
+          <h3 class="label">{c.style.typeTitle}</h3>
+          <ul class="typescale">
+            {
+              styleGuide.type.map((row) => (
+                <li>
+                  <span style={`font-size:${row.size}px; font-weight:${row.weight}`}>{row.name}</span>
+                  <span class="typescale__spec">
+                    {row.size} · {row.label}
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section class="card sg__grid" data-reveal>
+          <h3 class="label">{c.style.gridTitle}</h3>
+          <div class="gridviz" aria-hidden="true">
+            {[1, 2, 3, 4, 5].map(() => <i />)}
+          </div>
+          <ul class="chip-list">
+            {c.style.grid.map((item) => <li class="chip">{item}</li>)}
+          </ul>
+        </section>
+
+        <section class="card sg__specs" data-reveal style="--i:1">
+          <h3 class="label">{c.style.specTitle}</h3>
+          <dl class="specs">
+            {
+              c.style.specs.map((spec) => (
+                <div>
+                  <dt>{spec.label}</dt>
+                  <dd>{spec.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </section>
+
+        <figure class="paper sg__img" data-reveal>
+          <figcaption class="label">{c.style.componentsTitle}</figcaption>
+          <Image src={components} alt={c.style.componentsAlt} widths={[700, 1200, 1800]} sizes="(max-width: 900px) 92vw, 1100px" loading="lazy" />
+        </figure>
+        <figure class="paper sg__img" data-reveal>
+          <figcaption class="label">{c.style.iconsTitle}</figcaption>
+          <Image src={icons} alt={c.style.iconsAlt} widths={[700, 1200, 1800]} sizes="(max-width: 900px) 92vw, 1100px" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 07 Outcome ───────────────────────── -->
+  <section class="section chapter" id="outcome">
+    <div class="container">
+      <header class="chapter__head">
+        <span class="chapter__no" data-reveal>{no(6)}</span>
+        <h2 class="display display-l" data-reveal style="--i:1">{c.outcome.title}</h2>
+      </header>
+
+      <blockquote class="quote" data-reveal>
+        <svg class="quote__pulse" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M2 24h30l8-18 12 30 10-22 6 10h50" />
+        </svg>
+        <p>{c.outcome.quote}</p>
+      </blockquote>
+
+      <div class="next" data-reveal="scale">
+        <div>
+          <h3 class="display display-m">{c.outcome.nextTitle}</h3>
+          <p>{c.outcome.nextLead}</p>
+        </div>
+        <div class="next__actions">
+          <a class="btn next__btn" href={profile.figmaUrl} target="_blank" rel="noopener noreferrer">
+            {c.figmaCta}
+            <Icon name="arrow-up-right" />
+          </a>
+          <a class="btn next__ghost" href={home}>
+            <Icon name="arrow-left" />
+            {c.back}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Reading progress + chapter rail ────────────────────────────── */
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: var(--z-progress);
+    height: 3px;
+    background: var(--grad-ink);
+    transform: scaleX(var(--p, 0));
+    transform-origin: 0 50%;
+  }
+  .rail {
+    position: fixed;
+    left: clamp(12px, 1.4vw, 28px);
+    top: 50%;
+    z-index: var(--z-rail);
+    transform: translateY(-50%);
+    display: none;
+  }
+  .rail ol {
+    display: grid;
+    gap: 2px;
+  }
+  .rail a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 34px;
+    padding: 0 10px 0 4px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    transition: color var(--dur-fast) ease;
+  }
+  .rail__no {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: var(--bg);
+    transition:
+      background-color var(--dur) var(--ease-out),
+      color var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out);
+  }
+  .rail__name {
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      opacity var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+    white-space: nowrap;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    box-shadow: var(--shadow-1);
+  }
+  .rail a:hover .rail__name,
+  .rail a:focus-visible .rail__name {
+    opacity: 1;
+    transform: none;
+  }
+  .rail a[aria-current] .rail__no {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  @media (min-width: 1380px) {
+    .rail {
+      display: block;
+    }
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────── */
+  .c-hero {
+    position: relative;
+    padding-top: clamp(108px, 13vh, 140px);
+    isolation: isolate;
+  }
+  .c-hero__wash {
+    position: absolute;
+    inset: 0 0 20% 0;
+    z-index: -1;
+    background:
+      radial-gradient(46% 60% at 86% 22%, rgb(124 143 224 / 0.42), transparent 70%),
+      radial-gradient(36% 50% at 58% 4%, rgb(169 196 242 / 0.5), transparent 70%),
+      radial-gradient(30% 46% at 6% 60%, rgb(157 181 160 / 0.32), transparent 70%);
+    filter: blur(20px);
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    transition: color var(--dur-fast) ease;
+  }
+  .back:hover {
+    color: var(--ink);
+  }
+  .back :global(svg) {
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .back:hover :global(svg) {
+    transform: translateX(-4px);
+  }
+  .c-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+    margin-top: clamp(16px, 3vw, 36px);
+  }
+  .c-hero__copy {
+    display: grid;
+    gap: 22px;
+    justify-items: start;
+  }
+  .c-logo {
+    padding: 12px 20px;
+    border-radius: 18px;
+    background: #fffbf5;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-1);
+  }
+  .c-logo :global(img) {
+    width: clamp(150px, 16vw, 236px);
+  }
+  .c-hero__cta {
+    margin-top: 8px;
+  }
+  .c-stage {
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    background: linear-gradient(160deg, #f6f8fc, #d3e2f6);
+    box-shadow: var(--shadow-2);
+    aspect-ratio: 4 / 3;
+  }
+  .c-stage :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .c-meta {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    margin-top: clamp(32px, 4.4vw, 56px);
+    border-block: 1px solid var(--line);
+  }
+  .c-meta > div {
+    padding: 22px clamp(12px, 2vw, 28px);
+    border-left: 1px solid var(--line);
+  }
+  .c-meta > div:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .c-meta dt,
+  .label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .c-meta dd {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-stretch: 92%;
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+
+  /* ── Chapter scaffolding ────────────────────────────────────────── */
+  .chapter__head {
+    display: grid;
+    gap: 16px;
+    margin-bottom: clamp(24px, 3.4vw, 40px);
+    padding-top: clamp(24px, 3vw, 36px);
+    border-top: 1px solid var(--line);
+  }
+  .chapter__no {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .sub {
+    display: grid;
+    gap: 12px;
+    margin: clamp(36px, 4.6vw, 60px) 0 clamp(18px, 2.4vw, 28px);
+  }
+  .label {
+    margin-bottom: 18px;
+  }
+  .ticks {
+    display: grid;
+    gap: 10px;
+    color: var(--ink-muted);
+  }
+  .ticks li {
+    position: relative;
+    padding-left: 24px;
+    text-wrap: pretty;
+  }
+  .ticks li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.62em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--grad-ink);
+  }
+
+  /* ── Overview ───────────────────────────────────────────────────── */
+  .overview {
+    display: grid;
+    gap: clamp(28px, 4vw, 48px);
+  }
+  .overview__lead {
+    max-width: 30em;
+    font-size: clamp(1.25rem, 2.3vw, 1.85rem);
+    line-height: 1.38;
+    letter-spacing: -0.012em;
+    text-wrap: pretty;
+  }
+  .overview__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Problem → Solution ─────────────────────────────────────────── */
+  .pairs {
+    display: grid;
+    gap: 14px;
+  }
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .pair__side {
+    display: grid;
+    align-content: center;
+    gap: 10px;
+    padding: clamp(18px, 2.4vw, 28px);
+    border-radius: var(--r-m);
+    line-height: 1.45;
+  }
+  .pair__side--problem {
+    background: var(--surface);
+    border: 1px dashed var(--line-strong);
+    color: var(--ink-muted);
+  }
+  .pair__side--solution {
+    background: var(--dusk);
+    color: var(--on-dusk);
+    background-image: radial-gradient(90% 140% at 100% 0%, rgb(63 88 212 / 0.55), transparent 70%);
+    box-shadow: var(--shadow-1);
+  }
+  .pair__side :global(strong) {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .pair__side--solution :global(strong) {
+    color: #fff;
+  }
+  .pair__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-self: start;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .pair__side--problem .pair__tag {
+    color: #9c4a2f;
+  }
+  .pair__side--solution .pair__tag {
+    color: #cfe0ff;
+  }
+  .pair__arrow {
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+  }
+
+  /* ── Process ────────────────────────────────────────────────────── */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    counter-reset: phase;
+  }
+  .phase {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    counter-increment: phase;
+  }
+  .phase::after {
+    content: '0' counter(phase);
+    position: absolute;
+    top: clamp(20px, 3vw, 34px);
+    right: clamp(22px, 3vw, 36px);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--ink-muted);
+  }
+  .phase__icon,
+  .feature__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .gantt {
+    margin-top: 16px;
+  }
+  .gantt__grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    row-gap: 10px;
+    padding-block: 4px 8px;
+    background: repeating-linear-gradient(
+      to right,
+      var(--line) 0 1px,
+      transparent 1px calc(100% / 7)
+    );
+  }
+  .gantt__week {
+    grid-row: 1;
+    padding: 0 0 8px 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+  .gantt__bar {
+    display: grid;
+    gap: 2px;
+    margin-inline: 4px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: var(--grad);
+    color: #14204f;
+    line-height: 1.2;
+    transform-origin: left center;
+    min-width: 0;
+  }
+  .gantt__bar span {
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+  .gantt__bar strong {
+    font-weight: 700;
+    font-size: clamp(0.82rem, 1.3vw, 1rem);
+    overflow-wrap: anywhere;
+  }
+
+  /* ── Survey ─────────────────────────────────────────────────────── */
+  .survey {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .survey__q h4 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    font-family: var(--font-display);
+    font-stretch: 92%;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .survey__no {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.85rem;
+  }
+  .bars {
+    display: grid;
+    gap: 14px;
+  }
+  .bars li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+  .bars__label {
+    color: var(--ink-muted);
+  }
+  .bars__val {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .bars__track {
+    grid-column: 1 / -1;
+    height: 8px;
+    border-radius: 8px;
+    background: rgb(42 37 48 / 0.09);
+    overflow: hidden;
+  }
+  .bars__track i {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--grad-ink);
+    transform: scaleX(calc(var(--v) / var(--max)));
+    transform-origin: left center;
+  }
+
+  /* ── Benchmark table ────────────────────────────────────────────── */
+  .bench {
+    padding-block: clamp(10px, 1.6vw, 18px);
+  }
+  .bench th,
+  .bench td {
+    padding: 13px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .bench tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+  .bench th[scope='row'],
+  .bench thead th:first-child {
+    text-align: left;
+    padding-left: 0;
+  }
+  .bench th[scope='row'] {
+    font-weight: 500;
+    color: var(--ink-muted);
+  }
+  .bench thead th {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 0.98rem;
+    white-space: nowrap;
+  }
+  .bench thead th:first-child {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .bench tbody tr {
+    transition: background-color var(--dur-fast) ease;
+  }
+  .bench tbody tr:hover {
+    background: rgb(42 37 48 / 0.035);
+  }
+  .mark {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+  }
+  .mark--yes {
+    background: rgb(67 160 71 / 0.16);
+    color: #256b29;
+  }
+  .mark--no {
+    background: rgb(198 123 92 / 0.2);
+    color: #9c3d22;
+  }
+
+  /* ── Persona ────────────────────────────────────────────────────── */
+  .persona {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  .persona__id {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+    text-align: center;
+  }
+  .persona__photo {
+    padding: 4px;
+    border-radius: 50%;
+    background: var(--grad);
+  }
+  .persona__photo :global(img) {
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    border: 4px solid var(--surface);
+    object-fit: cover;
+  }
+  .persona__facts {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    text-align: left;
+  }
+  .persona__facts > div {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 10px;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+  .persona__facts dt {
+    color: var(--ink-muted);
+  }
+  .persona__facts dd {
+    font-weight: 600;
+  }
+  .persona__blocks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .persona__pain {
+    border-style: dashed;
+    border-color: var(--line-strong);
+  }
+
+  /* ── Split rows (text + visual) ─────────────────────────────────── */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+    margin-bottom: clamp(36px, 4.6vw, 60px);
+  }
+  .split__text {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+    display: grid;
+    gap: 14px;
+  }
+  .wire {
+    padding: clamp(12px, 2vw, 28px);
+    margin: 0;
+  }
+
+  /* ── User flow ──────────────────────────────────────────────────── */
+  .flow {
+    display: grid;
+    gap: 34px;
+    --wire: var(--line-strong);
+  }
+  .flow__row {
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 10px;
+  }
+  /* connector from the row above */
+  .flow__row + .flow__row::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -34px;
+    height: 34px;
+    border-left: 2px solid var(--wire);
+  }
+  /* rows that fan out to several nodes get a bracket */
+  .flow__row--split::after,
+  .flow__row--tabs::after {
+    content: '';
+    position: absolute;
+    top: -17px;
+    left: 25%;
+    right: 25%;
+    height: 17px;
+    border: 2px solid var(--wire);
+    border-bottom: 0;
+    border-radius: 12px 12px 0 0;
+  }
+  .flow__row--tabs::after {
+    left: 12.5%;
+    right: 12.5%;
+    height: 0;
+    border-width: 2px 0 0;
+    border-radius: 0;
+  }
+  .node--tab::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -18px;
+    height: 17px;
+    border-left: 2px solid var(--wire);
+  }
+  .flow__row--split::before,
+  .flow__row--tabs::before {
+    height: 17px !important;
+  }
+  /* rows after a fan-out: merge back to the centre */
+  .flow__row--split + .flow__row::after {
+    content: '';
+    position: absolute;
+    top: -34px;
+    left: 25%;
+    right: 25%;
+    height: 17px;
+    border: 2px solid var(--wire);
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+  }
+  .flow__row--split + .flow__row::before {
+    top: -17px;
+    height: 17px;
+  }
+  /* only "Book" continues from the tab row */
+  .flow__row--from-book::before {
+    left: 37.5% !important;
+    width: 12.5%;
+    top: -34px !important;
+    height: 20px !important;
+    border-bottom: 2px solid var(--accent);
+    border-left-color: var(--accent) !important;
+    border-radius: 0 0 0 12px;
+  }
+  .flow__row--from-book::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -16px;
+    height: 16px;
+    border-left: 2px solid var(--accent);
+  }
+  .node {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    min-height: 46px;
+    padding: 8px 18px;
+    border-radius: 14px;
+    border: 1.5px solid rgb(47 73 196 / 0.4);
+    background: var(--surface-2);
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .node--tab {
+    width: 100%;
+    max-width: 150px;
+    border-color: transparent;
+    background: #cfd8f6;
+    color: #1d2f7c;
+    font-weight: 600;
+  }
+  .node--tab.is-path,
+  .node--end {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ── Hi-fi gallery ──────────────────────────────────────────────── */
+  .gallery {
+    overflow-x: auto;
+    padding: 16px var(--gutter) 44px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+    cursor: grab;
+  }
+  .gallery:global(.is-dragging) {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+  }
+  .gallery ul {
+    display: flex;
+    gap: clamp(16px, 2.4vw, 28px);
+    width: max-content;
+    margin-inline: auto;
+  }
+  .gallery ul {
+    align-items: flex-end;
+  }
+  .shot {
+    scroll-snap-align: center;
+  }
+  .shot figure {
+    display: grid;
+    gap: 16px;
+  }
+  .shot__frame {
+    transition: transform 0.6s var(--ease-out);
+  }
+  .shot:hover .shot__frame {
+    transform: translateY(-8px);
+  }
+  .shot__frame :global(img) {
+    width: clamp(220px, 20vw, 264px);
+    filter: drop-shadow(0 26px 34px rgb(42 37 48 / 0.26));
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .shot figcaption {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-left: 6px;
+    font-weight: 600;
+  }
+  .shot figcaption span {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  /* ── Features ───────────────────────────────────────────────────── */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .feature {
+    position: relative;
+    grid-column: span 2;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: clamp(22px, 3vw, 34px);
+    border-radius: var(--r-l);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .feature:nth-child(-n + 2) {
+    grid-column: span 3;
+  }
+  .feature::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    bottom: -80px;
+    z-index: -1;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: var(--grad);
+    filter: blur(50px);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out);
+  }
+  .feature:hover::after {
+    opacity: 0.6;
+  }
+  .feature__icon {
+    margin-bottom: 8px;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .feature:hover .feature__icon {
+    transform: rotate(-8deg) scale(1.08);
+  }
+  .feature p {
+    color: var(--ink-muted);
+    text-wrap: pretty;
+  }
+
+  /* ── Style guide ────────────────────────────────────────────────── */
+  .sg {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .sg__img {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: clamp(18px, 3vw, 36px);
+  }
+  .sg__img :global(img) {
+    width: 100%;
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .swatches li {
+    display: grid;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .swatches__chip {
+    aspect-ratio: 1 / 0.82;
+    background: var(--c);
+  }
+  .swatches__name {
+    padding: 12px 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .typescale {
+    display: grid;
+  }
+  .typescale li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 9px;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.3;
+  }
+  .typescale li:last-child {
+    border-bottom: 0;
+  }
+  .typescale__spec {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .gridviz {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    height: 96px;
+    padding-inline: 16px;
+    margin-bottom: 18px;
+    border-radius: 14px;
+    border: 1.5px dashed var(--line-strong);
+  }
+  .gridviz i {
+    background: rgb(47 73 196 / 0.18);
+  }
+  .specs {
+    display: grid;
+    gap: 14px;
+  }
+  .specs dt {
+    font-weight: 600;
+  }
+  .specs dd {
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Outcome ────────────────────────────────────────────────────── */
+  .quote {
+    display: grid;
+    gap: 22px;
+    max-width: 980px;
+  }
+  .quote__pulse {
+    width: 120px;
+    height: 40px;
+    fill: none;
+    stroke: #e5484d;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 190;
+    stroke-dashoffset: 0;
+  }
+  .quote p {
+    font-family: var(--font-serif);
+    font-size: clamp(1.45rem, 2.9vw, 2.35rem);
+    line-height: 1.28;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+  }
+  .next {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 40px;
+    margin-top: clamp(32px, 4.4vw, 56px);
+    padding: clamp(28px, 4.4vw, 56px);
+    border-radius: var(--r-xl);
+    background: linear-gradient(165deg, #1c4fe0, #12297f);
+    color: #fff;
+    box-shadow: var(--shadow-2);
+  }
+  .next p {
+    margin-top: 8px;
+    color: #d5e0ff;
+  }
+  .next__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .next__btn {
+    background: #fff;
+    color: #12297f;
+  }
+  .next__ghost {
+    border: 1.5px solid rgb(255 255 255 / 0.45);
+    color: #fff;
+  }
+  .next__ghost:hover {
+    background: rgb(255 255 255 / 0.12);
+  }
+  .next__ghost:hover :global(svg) {
+    transform: translateX(-4px);
+  }
+  .next :global(:focus-visible) {
+    outline-color: #fff;
+  }
+
+  /* ── Scroll-triggered data motion ───────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) [data-reveal] .bars__track i {
+      transform: scaleX(0);
+      transition: transform 1.1s var(--ease-out);
+      transition-delay: calc(250ms + var(--n) * 70ms);
+    }
+    :global(html.js) [data-reveal].is-in .bars__track i {
+      transform: scaleX(calc(var(--v) / var(--max)));
+    }
+    :global(html.js) .gantt[data-reveal] .gantt__bar {
+      transform: scaleX(0);
+      transition: transform 0.9s var(--ease-out);
+      transition-delay: calc(300ms + var(--n) * 220ms);
+    }
+    :global(html.js) .gantt[data-reveal].is-in .gantt__bar {
+      transform: none;
+    }
+    :global(html.js) .gantt[data-reveal] .gantt__bar > * {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      transition-delay: calc(800ms + var(--n) * 220ms);
+    }
+    :global(html.js) .gantt[data-reveal].is-in .gantt__bar > * {
+      opacity: 1;
+    }
+    :global(html.js) [data-reveal] .swatches__chip {
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path 0.9s var(--ease-out);
+      transition-delay: calc(200ms + var(--n) * 110ms);
+    }
+    :global(html.js) [data-reveal].is-in .swatches__chip {
+      clip-path: inset(0);
+    }
+    :global(html.js) .quote[data-reveal] .quote__pulse {
+      stroke-dashoffset: 190;
+      transition: stroke-dashoffset 1.6s var(--ease-in-out) 0.2s;
+    }
+    :global(html.js) .quote[data-reveal].is-in .quote__pulse {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .c-hero__grid,
+    .split,
+    .persona,
+    .phases,
+    .survey,
+    .sg {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .split__text,
+    .persona__id {
+      position: static;
+    }
+    .c-meta {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .c-meta > div:nth-child(odd) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .c-meta > div:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+    .pair {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .pair__arrow {
+      height: 34px;
+    }
+    .pair__arrow :global(svg) {
+      transform: rotate(90deg);
+    }
+    .feature,
+    .feature:nth-child(-n + 2) {
+      grid-column: span 6;
+    }
+    .gallery ul {
+      margin-inline: 0;
+    }
+  }
+  @media (max-width: 620px) {
+    .overview__cards,
+    .persona__blocks {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .swatches {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .gantt__week {
+      padding-left: 4px;
+      font-size: 0.78rem;
+    }
+    .gantt__bar {
+      margin-inline: 2px;
+      padding: 10px 8px;
+      border-radius: 12px;
+    }
+    .gantt__bar span {
+      font-size: 0.68rem;
+    }
+    .node {
+      padding: 8px 10px;
+      font-size: 0.85rem;
+    }
+    .bench th,
+    .bench td {
+      padding: 11px 6px;
+      font-size: 0.92rem;
+    }
+  }
+</style>

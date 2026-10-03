@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+import { type Lang, localePath, useT } from '../i18n';
+import { profile } from '../data/profile';
+
+interface Props {
+  lang: Lang;
+  route: '' | 'tebeto';
+}
+
+const { lang, route } = Astro.props;
+const t = useT(lang);
+const home = localePath(lang);
+const section = (id: string) => (route === '' ? `#${id}` : `${home}#${id}`);
+const year = new Date().getFullYear();
+
+const links = [
+  { href: section('about'), label: t.nav.about },
+  { href: localePath(lang, 'tebeto'), label: t.nav.work },
+  { href: section('experience'), label: t.nav.experience },
+  { href: section('skills'), label: t.nav.skills },
+];
+---
+
+<footer class="site-footer on-dusk">
+  <div class="site-footer__glow" aria-hidden="true"></div>
+  <div class="container site-footer__inner">
+    <div class="site-footer__top">
+      <div data-reveal>
+        <p class="display site-footer__name">{profile.name}</p>
+        <p class="site-footer__role">
+          <Icon name="pin" size={16} />
+          {t.footer.role} · {t.footer.location}
+        </p>
+      </div>
+      <nav aria-label={t.footer.navLabel} data-reveal style="--i:1">
+        <ul class="site-footer__nav">
+          {
+            links.map((l) => (
+              <li>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-row">
+      <p>© {year} {profile.name}. {t.footer.rights}</p>
+      <a href="#main">
+        {t.footer.top}
+        <Icon name="arrow-up" />
+      </a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,72 @@
+---
+import { type Lang, languages, localePath, useT } from '../i18n';
+import { profile } from '../data/profile';
+
+interface Props {
+  lang: Lang;
+  route: '' | 'tebeto';
+}
+
+const { lang, route } = Astro.props;
+const t = useT(lang);
+const home = localePath(lang);
+const onHome = route === '';
+// On the home page the section links are plain hashes so the scroll-spy can track them.
+const section = (id: string) => (onHome ? `#${id}` : `${home}#${id}`);
+
+const links = [
+  { href: section('about'), label: t.nav.about, spy: 'about' },
+  { href: localePath(lang, 'tebeto'), label: t.nav.work, current: !onHome },
+  { href: section('experience'), label: t.nav.experience, spy: 'experience' },
+  { href: section('skills'), label: t.nav.skills, spy: 'skills' },
+];
+---
+
+<header class="site-header" data-header>
+  <div class="site-header__bar">
+    <a class="brand" href={home} aria-label={`${profile.shortName} — ${t.nav.home}`}>
+      <span class="brand__mark" aria-hidden="true">{profile.monogram}</span>
+      <span class="brand__name">{profile.shortName}</span>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label={t.nav.primary} data-nav>
+      {
+        links.map((l) => (
+          <a href={l.href} data-spy={l.spy} aria-current={l.current ? 'page' : undefined}>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="header-tools">
+      <div class="lang" role="group" aria-label={t.nav.language}>
+        {
+          (Object.keys(languages) as Lang[]).map((l) => (
+            <a
+              href={localePath(l, route)}
+              hreflang={l}
+              lang={l}
+              aria-label={languages[l]}
+              aria-current={l === lang ? 'true' : undefined}
+            >
+              {l.toUpperCase()}
+            </a>
+          ))
+        }
+      </div>
+      <button
+        class="menu-btn"
+        type="button"
+        aria-controls="site-nav"
+        aria-expanded="false"
+        aria-label={t.nav.menu}
+        data-menu-btn
+        data-label-open={t.nav.menu}
+        data-label-close={t.nav.close}
+      >
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
